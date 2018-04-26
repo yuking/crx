@@ -10,7 +10,6 @@ changeColor.onclick = function(element) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.executeScript(
       tabs[0].id,
-      // switchM('zne_kc_icon','http://passport2.chaoxing.com/mooc.jsp?v=0&s=bd56d3792f8dff93ba0fa620e8e590a9')
       {code: "document.getElementById('zne_kc_icon').click()"});
   });
 };
