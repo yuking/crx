@@ -1,0 +1,38 @@
+1.logFunc
+    onSendlog(logdata, )
+
+    public function onPlayProgress(proTime:Number, proSize:Number, data:Object, logdata:Object) : void
+    {
+        this.jQuery("onPlayProgress",proTime,proSize,data,this._player.getCtrller().genEnc());
+        if(this.getPlayState() != 2)
+        {
+           this.onSendlog(logdata,0);
+        }
+    }
+
+    public function onStart(index:int, data:Object, logdata:Object) : void
+    {
+       this.jQuery("onStart",index,data);
+       this.onSendlog(logdata,3);
+    }
+
+    public function onEnd(index:int, data:Object, enc:String, logdata:Object) : void
+    {
+        this.jQuery("onEnd",index,data,enc);
+        this.onSendlog(logdata,4);
+    }
+
+    public function onPlay(proTime:Number, logdata:Object) : void
+    {
+        this.jQuery("onPlay",proTime);
+        this.onSendlog(logdata,3);
+    }
+      
+    public function onPause(proTime:Number, logdata:Object) : void
+    {
+        this.jQuery("onPause",proTime);
+        if(logdata.chapterId)
+        {
+            this.onSendlog(logdata,2);
+        }
+    }

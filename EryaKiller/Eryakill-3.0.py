@@ -1,25 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+
+# 说明：1.本脚本只负责课程时长代挂，为了防止被和谐，本脚本不提供加速观看功能
+# 2.原则上脚本自动滤过视频观看中的问题提问
+# 3.原则上脚本	自动帮忙提交每一课时的课后问题，但答案随机，不保证正确性
+# 4.鉴于第三点，请同学们认真完成期末考试（认真找答案！否则不保证期末能通过
+# 5.鉴于第一点和第二点，本脚本严格模拟正常上课行为，所以总共所需时间不曾减少，建议后台挂机使用
+# 6.建议不要连续挂，一天挂几个小时，或者一天挂几章，尽量在工作时间挂，否则容易被查出
 #
-#   Erya killer
-#	@Version: 3.0
-#	@Author: Lsk Skysy
-#	@Email: admin@skysy.cn
-#   @Finished Time: 2016.11.10
-#	
-#	说明：1.本脚本只负责课程时长代挂，为了防止被和谐，本脚本不提供加速观看功能
-#		 2.原则上脚本自动滤过视频观看中的问题提问
-#		 3.原则上脚本	自动帮忙提交每一课时的课后问题，但答案随机，不保证正确性
-#		 4.鉴于第三点，请同学们认真完成期末考试（认真找答案！否则不保证期末能通过
-#		 5.鉴于第一点和第二点，本脚本严格模拟正常上课行为，所以总共所需时间不曾减少，建议后台挂机使用
-#		 6.建议不要连续挂，一天挂几个小时，或者一天挂几章，尽量在工作时间挂，否则容易被查出
-#
-#	@大天使之剑，屠龙宝刀点击就送！
+# @大天使之剑，屠龙宝刀点击就送！
 #
 
 import sys, os, platform, subprocess, time, datetime
 import httplib, hashlib, json, cookielib, urllib2, urllib, re, getpass, random
-from threading import Timer 
+from threading import Timer
+from code import get_code
 
 # ！全局变量
 cookie = cookielib.CookieJar()         #保存cookie
@@ -528,7 +524,7 @@ def SplitStr(inner, prev, next):
 
 # ！获取课后作业的成绩的相关参数
 def GetScoreArg(cid, clazzid, courseid, jobid, workid, utenc ,enc):
-	url = 'https://mooc1-2.chaoxing.com/api/work?api=1&workId=' + workid
+	url = 'https://mooc1-1.chaoxing.com/api/work?api=1&workId=' + workid
 	url += '&jobid=' + jobid
 	url += '&needRedirect=true'
 	url += '&knowledgeid=' + cid
@@ -562,7 +558,7 @@ def GetScoreArg(cid, clazzid, courseid, jobid, workid, utenc ,enc):
 
 # ! 获取课后作业的相关参数
 def GetWorKArg(clazzid, courseid, cid, tabnum):
-	url = 'https://mooc1-2.chaoxing.com/knowledge/cards?clazzid=' + clazzid + '&courseid=' + courseid + '&knowledgeid=' + cid + '&num=' + str(tabnum - 1) + '&v=20160407-1'
+	url = 'https://mooc1-1.chaoxing.com/knowledge/cards?clazzid=' + clazzid + '&courseid=' + courseid + '&knowledgeid=' + cid + '&num=' + str(tabnum - 1) + '&v=20160407-1'
 	#print url
 	req = urllib2.Request(
 		url=url,
@@ -599,7 +595,7 @@ def GetWorKArg(clazzid, courseid, cid, tabnum):
 
 # ! 获取课后作业关键参数utenc
 def GetUtenc(cid, courseid, clazzid, enc):
-	url = 'https://mooc1-2.chaoxing.com/mycourse/studentstudy?chapterId=' + cid + '&courseId=' + courseid + '&clazzid=' + clazzid + '&enc=' + enc
+	url = 'https://mooc1-1.chaoxing.com/mycourse/studentstudy?chapterId=' + cid + '&courseId=' + courseid + '&clazzid=' + clazzid + '&enc=' + enc
 	req = urllib2.Request(
 		url=url,
 		headers=webheaders
@@ -624,7 +620,7 @@ def GetUtenc(cid, courseid, clazzid, enc):
 
 # ! 获取课后作业的题号以及题型
 def GetTestProblem(cid, clazzid, courseid, jobid, workid, utenc ,enc):
-	url = 'https://mooc1-2.chaoxing.com/api/work?api=1&workId=' + str(workid)
+	url = 'https://mooc1-1.chaoxing.com/api/work?api=1&workId=' + str(workid)
 	url += '&jobid=' + jobid
 	url += '&needRedirect=true'
 	url += '&knowledgeid=' + cid
@@ -698,7 +694,7 @@ def FinishTestWork(problem):
 
 # ! 提交课后作业的答案
 def PostTestAnswer(clazzid, courseid, token, total, cid, workid, jobid, workrid, problem):
-	url = 'https://mooc1-2.chaoxing.com/work/addStudentWorkNewWeb?_classId=' + clazzid + '&courseid=' + courseid + '&token=' + token
+	url = 'https://mooc1-1.chaoxing.com/work/addStudentWorkNewWeb?_classId=' + clazzid + '&courseid=' + courseid + '&token=' + token
 	postdata = {
 		'pyFlag' : '',
 		'courseId' : courseid,
@@ -746,7 +742,7 @@ def NewEnc(clazzId, jobId, objectId, playTime, duration, clipTime):
 
 # ! 获取看视频时问题
 def GetProblemForWatching(mid):
-	url = 'https://mooc1-2.chaoxing.com/richvideo/initdatawithviewer?&start=undefined&mid=' + mid
+	url = 'https://mooc1-1.chaoxing.com/richvideo/initdatawithviewer?&start=undefined&mid=' + mid
 	problemId = ''
 	answer = ''
 	proTime = 0
@@ -773,7 +769,7 @@ def GetProblemForWatching(mid):
 
 # ! 发送看视频时问题答案
 def PostAnswerForWProblem(problemId, answer):
-	url = 'https://mooc1-2.chaoxing.com/richvideo/qv?resourceid=' + problemId + '&answer=' + '\'' + answer + '\''
+	url = 'https://mooc1-1.chaoxing.com/richvideo/qv?resourceid=' + problemId + '&answer=' + '\'' + answer + '\''
 	req = urllib2.Request(
 		url=url,
 		headers=webheaders
@@ -790,7 +786,7 @@ def PostAnswerForWProblem(problemId, answer):
 # ! 校验时长用的请求（不允许大幅度跳时，服务端有做检测
 def PostJudgeRequest(dtoken, duration, objectid, clazzid, otherinfo, jobid, playtime):
 	global userId
-	url = 'https://mooc1-2.chaoxing.com/multimedia/log/' + dtoken
+	url = 'https://mooc1-1.chaoxing.com/multimedia/log/' + dtoken
 	url += '?duration=' + str(duration)
 	url += '&objectId=' + objectid
 	url += '&clazzId=' + clazzid
@@ -807,8 +803,8 @@ def PostJudgeRequest(dtoken, duration, objectid, clazzid, otherinfo, jobid, play
 	#print url
 
 	headers = dict.copy(webheaders)
-	headers['Host'] = 'mooc1-2.chaoxing.com'
-	headers['Referer'] = 'https://mooc1-2.chaoxing.com/ananas/modules/video/index.html?v=20150402'
+	headers['Host'] = 'mooc1-1.chaoxing.com'
+	headers['Referer'] = 'https://mooc1-1.chaoxing.com/ananas/modules/video/index.html?v=20150402'
 	req = urllib2.Request(
 		url=url,
 		headers=headers
@@ -827,7 +823,7 @@ def PostJudgeRequest(dtoken, duration, objectid, clazzid, otherinfo, jobid, play
 # ! 每一课时的结束包
 def PostEndRequest(dtoken, duration, objectid, clazzid, otherinfo, jobid, playtime):
 	global userId
-	url = 'https://mooc1-2.chaoxing.com/multimedia/log/' + dtoken
+	url = 'https://mooc1-1.chaoxing.com/multimedia/log/' + dtoken
 	url += '?duration=' + str(duration)
 	url += '&objectId=' + objectid
 	url += '&clazzId=' + clazzid
@@ -844,8 +840,8 @@ def PostEndRequest(dtoken, duration, objectid, clazzid, otherinfo, jobid, playti
 	#print url
 
 	headers = webheaders
-	headers['Host'] = 'mooc1-2.chaoxing.com'
-	headers['Referer'] = 'https://mooc1-2.chaoxing.com/ananas/modules/video/index.html?v=20150402'
+	headers['Host'] = 'mooc1-1.chaoxing.com'
+	headers['Referer'] = 'https://mooc1-1.chaoxing.com/ananas/modules/video/index.html?v=20150402'
 	req = urllib2.Request(
 		url=url,
 		headers=headers
@@ -864,7 +860,7 @@ def PostEndRequest(dtoken, duration, objectid, clazzid, otherinfo, jobid, playti
 def GetDuration(oid):
 	dur = ''
 	dtoken = ''
-	url = 'https://mooc1-2.chaoxing.com/ananas/status/' + oid + '?k=' + fid + '&_dc=' + LocalTimeStamp()
+	url = 'https://mooc1-1.chaoxing.com/ananas/status/' + oid + '?k=' + fid + '&_dc=' + LocalTimeStamp()
 	req = urllib2.Request(
 		url=url,
 		headers=webheaders
@@ -888,7 +884,7 @@ def GetDuration(oid):
 
 # ! 获取视频的ObjectId
 def GetObjectId(courseid, clazzid, cid, tabnum):
-	url = 'https://mooc1-2.chaoxing.com/knowledge/cards?clazzid=' + clazzid + '&courseid=' + courseid + '&knowledgeid=' + cid + '&num=' + str(tabnum - 2) + '&v=20160407-1'
+	url = 'https://mooc1-1.chaoxing.com/knowledge/cards?clazzid=' + clazzid + '&courseid=' + courseid + '&knowledgeid=' + cid + '&num=' + str(tabnum - 2) + '&v=20160407-1'
 	matchOid = re.compile(r'''.*data="{&quot;objectid&quot;:&quot;(?P<oid>.*)&quot;,&quot;name''')
 	matchCInf = re.compile(r'''.*mArg=(?P<inf>.*);}catch''')
 	#matchMid = re.compile(r'''.*"mid":"(?P<mid>.*)","type":".mp4"''')
@@ -940,7 +936,7 @@ def GetObjectId(courseid, clazzid, cid, tabnum):
 
 # ! 获取TabNum
 def GetTabNum(courseid, clazzid, cid):
-	url = 'https://mooc1-2.chaoxing.com/mycourse/studentstudyAjax'
+	url = 'https://mooc1-1.chaoxing.com/mycourse/studentstudyAjax'
 	postdata = {
 		'courseId' : courseid,
 		'clazzid' : clazzid,
@@ -969,7 +965,7 @@ def GetTabNum(courseid, clazzid, cid):
 
 # ! 获取课程章节列表，判断当前需要观看的章节
 def GetOrangeChapter(courseid, clazzid, enc):
-	url = 'https://mooc1-2.chaoxing.com/mycourse/studentcourse?courseId=' + courseid + '&clazzid=' + clazzid + '&enc=' + enc
+	url = 'https://mooc1-1.chaoxing.com/mycourse/studentcourse?courseId=' + courseid + '&clazzid=' + clazzid + '&enc=' + enc
 	matchChapter = re.compile(r'''.*<emclass="orange">\d</em></span><spanclass="articlename"><ahref='/mycourse/studentstudy\?chapterId=(?P<cid>.*)&courseId=\d+&clazzid=\d+&enc=.*'title="(?P<cname>.*)">(?P=cname)</a></span></h3>''')
 	cid = ''
 	cname = ''
@@ -1039,7 +1035,7 @@ def LocalTimeStamp():
 def plog(inner):
 	if inner[: 5] in 'ERROR':
 		time.sleep(10)
-	print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']' + '：' + inner
+	print '[' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']' + ':' + inner
 
 # ！验证码
 def GetNumCode():
@@ -1058,14 +1054,18 @@ def GetNumCode():
 
 	#偷懒写法之一，因为本脚本尽量使用python27自带的原生库，所以验证码显示交给系统处理
 	#如果放在linux服务器上挂的，自己想办法过验证码吧
-	if system in 'Darwin':
-		subprocess.call(['open', 'verImg.png'])
-	elif system in 'Windows':
-		os.startfile('verImg.png')
-	else:
-		subprocess.call(['xdg-open', 'verImg.png'])
-
+	# if system in 'Darwin':
+	# 	subprocess.call(['open', 'verImg.png'])
+	# elif system in 'Windows':
+	# 	os.startfile('verImg.png')
+	# else:
+	# 	subprocess.call(['xdg-open', 'verImg.png'])
 	return raw_input('请输入验证码(输入0，刷新验证码:')
+
+	# 利用腾讯ai识别验证码
+	# code = get_code('verImg.png')
+	# print code
+	# return code
 
 # ！获取课程
 def GetCourse():
@@ -1074,7 +1074,7 @@ def GetCourse():
 	clazzid = ''
 	name = ''
 	courses = []
-	url = 'http://mooc1-2.chaoxing.com/visit/courses'
+	url = 'http://mooc1-1.chaoxing.com/visit/courses'
 	matchCourse = re.compile(r'''studentcourse\?courseId=(?P<courseid>\d+)&clazzid=(?P<clazzid>\d+)&enc=(?P<enc>\w+)'target="_blank"title="(?P<name>\W+)">(?P=name)''')
 	try:
 		req = urllib2.Request(
@@ -1210,7 +1210,8 @@ def EryaKiller():
 		else:
 			plog('获取当前章节的Objectid成功!')
 		#print begin
-
+		# stop
+		break
 		dur, dtoken = GetDuration(oid)
 
 		plog('开始观看【' + name + '-' + cname + '】')

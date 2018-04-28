@@ -1,0 +1,1345 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>学生学习页面</title>
+<link href="/css/courselist/global.css?v=20160407" rel="stylesheet" type="text/css" />
+<link href="/css/courselist/play.css?v=20160407" rel="stylesheet" type="text/css" />
+<script src="/js/group/baguettebox.min.js"></script>
+<link rel="stylesheet" href="/css/group/baguettebox.min.css">
+<link href="/css/group/chapter_common.css" type="text/css" rel="stylesheet">
+<link href="/css/group/chapter_student_common.css" type="text/css" rel="stylesheet">
+<script src="/js/group/new-chapter-group-right.js?v=2018-0130-1400"></script>
+<style>#iframe{width:100%;}
+#selector { 
+    z-index:1000;
+    position:fixed; 
+    
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none; 
+}
+#selector .spliter{
+    height: 100%;
+    top: 0;
+    width: 7px;
+    display: block;
+    font-size: 0.1px;
+    position: absolute;
+    cursor: col-resize;
+}
+#selector .spliter.west{
+    left: -5px;
+}
+#selector .spliter.east{
+    right: -5px;
+}
+.mask{
+    z-index:999;
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+}
+.switchbtn{z-index:1001;}
+.zad731{z-index:1001;}
+.right{border-left:7px solid #504f55;}
+.inputwords,.temptexarea{width:80%}
+
+.iconon{background:url(/images/note/note_on.png) no-repeat;width:21px;height:21px;max-width:21px;max-height:21px;background-size:21px 21px;}
+.iconoff{background:url(/images/note/note_off.png) no-repeat;width:21px;height:21px;max-width:21px;max-height:21px;background-size:21px 21px;}
+.contenton{font-size: 16px;color:blue;}
+.contentoff{font-size: 16px;color:#999;}
+.title_block{display:inline-block;cursor:pointer}
+#top {display:block;padding-right:0px;margin:10px 0;height:38px;width:51px;line-height: 36px;font-size: 16px;color: #0a0a0a;background: #fff url(/images/top.png) no-repeat 12px center;padding-left: 0px;border-radius: 3px;text-align:left;}
+#kf {display:block;padding-right:0px;margin:10px 0;height:38px;width:51px;line-height: 36px;font-size: 16px;color: #0a0a0a;background: #fff url(/images/kfIcon.png) no-repeat 12px center;padding-left: 0px;border-radius: 3px;text-align:left;}
+#dy {display:block;height:38px;width:51px;margin:10px 0;line-height: 36px;font-size: 16px;bottom: 210px;color: #0a0a0a;background: #fff url(/images/dyIcon.png) no-repeat 12px center;padding-left: 0px;border-radius: 3px;text-align:left;}
+/*#top {position:fixed;width:76px;height:40px;line-height:40px;font-size:15px;text-align:center;bottom:144px;border:1px #e4e4e7 solid;}
+#kf {position:fixed;width:76px;height:40px;line-height:40px;font-size:15px;text-align:center;bottom:102px;border:1px #e4e4e7 solid;}
+.on-line-answer{position:fixed;width:76px;height:40px;line-height:40px;font-size:15px;text-align:center;bottom:62px;border:1px #e4e4e7 solid;}
+*/#yj {display:block;width:26px;height:26px;margin:10px 0;background:url(/img/min_yj_22.png) no-repeat;}
+
+/*验证码*/
+.AlertCon02 {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #c5c5c5;
+    height: 238px;
+    padding: 10px;
+    width: 528px;
+}
+.fr{ float:right;}
+.fl{ float:left;}
+.clearfix {overflow:hidden;zoom:1}
+.zcenter { width:600px; margin:0 auto; color:#333;margin-top: 100px;}
+.zcenter a { color:#2ca4de;}
+
+.zc_h2 { padding-top:50px; font-size:36px;}
+/*.zc_table { margin-top:35px;}*/
+.zc_table{width:334;text-align: left;}
+.zc_table td {padding-top:11px;font-size: 16px;}
+.zc_table  td span.sp_h2{font-size: 16px;}
+.zc_name {text-align:right;width: 85px;}
+.zc_table td.zc_vercode_ac{font-size: 12px;vertical-align: middle;padding-left: 0px;}
+img{vertical-align: middle;}
+.zc_input330,.zc_input32 { width:325px; height:28px; padding-left:5px; border:1px #d7d7d7 solid; border-radius:3px; background:none; line-height:28px;}
+.zc_input32 { width:155px;}
+.zc_verify { padding:0px;margin:0px;padding-right: 5px;padding-left: 7px;}
+.zc_btn,.zc_btn1 { display:inline-block; padding-top:10px; font-size:20px; text-align:center;}
+.zc_btn a ,.zc_btn1 a{ display:inline-block; width:163px; height:30px; border-radius:4px; line-height:30px; text-align:center; background-color:#7B9E31; color:#fff;}
+.zc_btn a:hover ,.zc_btn1 a:hover { background-color:#6e850c; text-decoration:none;}
+.zc_old { padding-left:10px;}
+.zc_fontsize1 { padding-top:43px; color:#555; font-size:22px;}
+.zc_fontsize2 { padding-top:10px; padding-bottom:40px; color:#555; font-size:14px;}
+.zgray ,zgray a {color:gray}
+.zgreen ,.zgreen a { color:#839b1b;}
+.zc_ps { width:400px; margin:0 auto;  margin-top:32px; padding-top:26px; padding-left:28px; padding-right:26px; border-top:1px #ccc solid; text-align:left; font-size:14px; }
+.zc_ps a { color:#2ca4de;}
+.zc_p { line-height:24px;}
+.zwindow { width:547px; height:341px; margin:0 auto; border:1px #ccc solid; border-radius:3px; text-align:left;}
+.zw_left { font-size:18px; text-align:left;}
+.zw_title { height:57px; padding-left:18px; background-color:#839b1b; line-height:57px; font-size:18px; color:#fff; }
+.zw_box { padding:30px; font-size:14px; line-height:24px;}
+.zw_content { height:185px;}
+.swfupload{float:left;}
+.role{color:#0367b0;font-size:12px;}
+.openlock{display:none;color:#7b9e31;cursor:pointer;text-decoration:underline;cursor: pointer;height: 30px;margin-top: -15px; position: absolute; right: 45px;top: 300px;width: 60px;}
+.bigImgDiv{position:fixed;top:0;left:0;width:100%;height:100%;display:none;z-index:999999;}
+.bigImgMask{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.8;z-index:1000001;}
+.bigImgClose{position:absolute;top:26px;right:52px;width:26px;height:26px;background:url(/images/closeImgView.png) no-repeat left center;background-size:100%;z-index:1000002;}
+.bigImgDiv img{position:absolute;left: 0;right: 0;top: 0;bottom: 0;margin:auto;z-index:1000003;display:inline-block;max-height: 80%;}
+
+.teacherTool{position:absolute;width:84px;z-index:99999;bottom:84px;display:none;}
+#btnOpt{float:right;padding:0 10px;border:1px solid #7b9e31;position:relative;}
+.toolOpenBtn{width:11px;height:36px;position:absolute;top:70%;z-index:100;}
+.toolCloseBtn{width:11px;height:36px;position:absolute;top:50%;margin-top:-18px;}
+.jobhint{width:45px;height:45px;border-radius:32px;background:#ff9838;position:absolute;bottom:260px;}
+    .chapterQrcode{right:0px;}
+    .teacherTool{right:318px;}
+    .toolOpenBtn{left:-11px;background:url(/images/toolOpenBtn.png) no-repeat left center;}
+    .toolCloseBtn{left:-11px;background:url(/images/toolCloseBtn.png) no-repeat left center;}
+    .jobhint{left:-100px;}
+</style>
+<script src="/js/ServerHost.js"></script>
+<script type="text/javascript" src="/js/courselist/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/js/domain.js"></script>
+<script type="text/javascript" src="https://fystat-ans.chaoxing.com/log/setlog?uid=61076792&courseId=201248513&classId=3586246&encode=beed5699427d1a403f06744d9782e305"></script>
+<script src="/space/new/js/wayer_v1.2.mini.js" ></script>
+<script src="/js/check_vercode.js" type="text/javascript"></script>
+<script type="text/javascript">
+window['dtype'] =  "Course";
+var ua=navigator.userAgent.indexOf('chaoxing_wisdomclass');
+if(ua!=-1){
+    document.write('<script src="/js/phone/protocolChaoXing/CXJSBridge.js"><\/script>');  
+    document.write('<script src="/js/phone/app.utils.js?v=1"><\/script>');
+} 
+var utEnc="5f5f50d5a0e16cc320d1c5410d3fd942";
+var courseId=201248513;
+var courseid=201248513;
+String.prototype.trim=function(){return this.replace(/(^\s*)|(\s*$)/g,"");} 
+//设置cookie
+var setCookie = function(name,value,hours,path,domain) {
+    var oNow = new Date();
+    oNow.setHours(oNow.getHours() + hours);
+    var sCookie = name + "=" + escape(value);
+    
+    if(hours) {
+        sCookie += ";expires=" + oNow.toGMTString();
+    }
+    
+    if(path) {
+        sCookie += ";path=" + path;
+    }
+    
+    if(domain) {
+        sCookie += ";domain=" + domain;
+    }
+    
+    document.cookie = sCookie;
+};
+
+                        
+//获取cookie
+var getCookie = function(name) {
+    var oRegExp = new RegExp("(^|)" + name + "=([^;]*)(;|$)","gi").exec(document.cookie), aCookie;
+    if(aCookie = oRegExp) {
+        return unescape(aCookie[2]);
+    }
+    return null;
+};
+
+var showorhide=function(htmlid){
+    var doc = document.getElementById(htmlid);
+    if(doc!=null){
+        if(doc.style.display!="none"){
+            doc.style.display="none";
+        }else{
+            doc.style.display="block";
+        }
+    }
+};
+
+var show=function(htmlid){
+    var doc = document.getElementById(htmlid);
+    doc.style.display="block";
+};
+var tasckvalidate=function(clazzid,nodeid){
+        window.open("/edit/validate?clazzid="+clazzid+"&nodeid="+nodeid+"&courseId="+courseId);
+};
+
+function bindSubCheck(callback) {
+    $('#sub').unbind('click');
+    $('#sub').on('click', function() {
+        var code=$("#code").val();
+        jQuery.ajax({
+               type:"POST",
+               url:"/img/ajaxValidate2",    
+               data:{code:code},
+               success: function(data){
+                 $("#code").val("");
+                 if(data.status){
+                     $("#validate").css("display","none");
+                     WAY.box.hide();
+                     var enc=data.enc;
+                    // $("#enc").val(enc);
+                     callback && callback(enc);
+                     //flushfinish(code,nodeid,clazzid);getVarCode
+                 }else{
+                     getVarCode();
+                     //location.href="/edit/validate?nodeid="+nodeid+"&clazzid="+clazzid
+                 }
+               }    
+        });
+    });
+}
+
+function validateTime(classId,courseId, callback){
+        jQuery.ajax({
+           type:"GET",
+           url:"/work/validate",
+           cache: false,
+           data:{classId:classId,courseId:courseId},
+           success: function(data){
+                if(data.status==1){
+                    alert("账号发生异常，请重新登录！");
+                    return;
+                }
+                if(data.status==2){
+                    //弹出验证码
+                    WAY.box.show({'divid':'validate', bkcolor: 'none'});
+                    bindSubCheck(callback);
+                }  
+                if(data.status==3){
+                    callback && callback('', '');
+                }
+           }
+        });
+    }
+    
+ $(document).ready(function(){
+    
+    jQuery.ajax({ //一个Ajax过程 
+            type: "get", //以get方式与后台沟通 
+            url : "/mycourse/studentstudycourselist", 
+            dataType:'html',//返回的值
+            data: {courseId:'201248513',chapterId:'102427150',clazzid:'3586246'}, 
+            success: function(data){//如果调用成功 
+                document.getElementById("coursetree").innerHTML=data;
+                        jQuery(".ncells h4").removeClass();
+                        jQuery(".ncells h5").removeClass();
+                        jQuery("#cur"+'102427150').addClass("currents");
+                        jQuery(".ncells .flush").css('display','none');
+                        jQuery("#cur"+'102427150').parent().parent().find(".flush").css('display','block');
+            } 
+        }); 
+});
+        $(".ncells a h4").live('click',function(){
+            jQuery(".ncells a h4").removeClass("currents");
+            jQuery(".ncells a h5").removeClass("currents");
+            jQuery(this).addClass("currents");
+            jQuery(".ncells .flush").css('display','none');
+            jQuery(this).parent().parent().find(".flush").css('display','block');
+        })
+        $(".ncells a h5").live('click',function(){
+            jQuery(".ncells a h4").removeClass("currents");
+            jQuery(".ncells a h5").removeClass("currents");
+            jQuery(".ncells .flush").css('display','none');
+            jQuery(this).addClass("currents");
+            jQuery(this).parent().parent().find(".flush").css('display','block');
+        })
+
+var addDiscussReply = function(discussId,replycount){
+    
+    var doc = document.getElementById("discuss"+discussId);
+    var content = doc.value;
+    if(content==null||content=='')
+    {
+        alert("内容不能为空！");
+        return;
+    }
+    /*if(content.length>300){
+        alert("字数不能超过300");
+        doc.value = title.substring(0,300);
+        return;
+    }*/
+    doc.value = "";
+    jQuery.post("/bbsapi/addDiscussReply",
+        {
+            discussId : discussId
+            ,replycount : replycount
+            ,clazzid : '3586246'
+            ,userId : '61076792'
+            ,content : content
+            ,role : 1
+            ,schoolId : '25614',
+            replaytype:'1',
+            ut:'s'
+        },
+        function(data){
+            if(data=='error'){
+                alert("添加失败！");
+            }else{
+               var doc = document.getElementById("replaylist"+discussId);
+               data = data.replace(/(^\s*)|(\s*$)/g,"");
+               doc.innerHTML = data;
+               var rcdoc = document.getElementById("replycount"+discussId);
+               rcdoc.innerHTML = parseInt(rcdoc.innerHTML)+1;
+               //alert("操作成功！");
+               //showorhide("replaytextarea"+discussId);
+            }
+        }
+    );
+ };
+ 
+ 
+var replay = function(num,disid,schoolid) {
+        var doc = document.getElementById("replaylist"+disid);
+        var showeddoc = document.getElementById("showed"+disid);
+        if(doc.style.display!="none"){
+            doc.style.display = "none";
+            //showeddoc.innerHTML="显示";
+        }else{
+            var obj = doc.innerHTML;
+            if(obj==null||obj==""){
+                
+                 jQuery.post("/schoolCourseInfo/getReplayList",
+                    {
+                        discussid:disid,
+                        schoolId:schoolid,
+                        replycount:num,
+                        date:new Date(),
+                        replaytype:'1'
+                    },
+                    function(data){
+                        data = data.replace(/(^\s*)|(\s*$)/g,"");
+                        doc.innerHTML = data;
+                    }
+                );
+                 //showeddoc.innerHTML="隐藏 ";
+                 doc.style.display = "block";
+                 show("replaytextarea"+disid);
+            }else{
+                //showeddoc.innerHTML="隐藏 ";
+                doc.style.display = "block";
+                show("replaytextarea"+disid);
+            }
+        }
+};
+
+var praise = function(obj,disid,schoolid) {
+     jQuery("#praise"+disid).removeClass();
+     jQuery("#praise"+disid).addClass("cur");
+    jQuery.post("/schoolCourseInfo/addBBSPraise",
+        {
+             disid:disid
+            ,schoolid : schoolid
+            ,userid:'61076792'
+        },
+        function(data){
+           var doc = document.getElementById("praise"+disid);
+           doc.innerHTML = parseInt(doc.innerHTML)+1;
+           obj.onclick=null;
+           
+        }
+    );
+    
+}
+
+ var addtopcomment = function(clazzid){
+    var title = document.getElementById("toplevelTextCommentTitle").value;
+    if(title==null || title=='' || title.trim()=='')
+    {
+        alert("标题不能为空！");
+        return;
+    }
+    if(title.length>50){
+        alert("字数不能超过50");
+        document.getElementById("toplevelTextCommentTitle").value = title.substring(0,50);
+        return;
+    }
+    
+    var content = document.getElementById("toplevelTextCommentContent").value;
+    /*
+    if(content==null||content=='')
+    {
+        alert("内容不能为空！");
+        return;
+    }
+    if(content.length>300){
+        alert("字数不能超过300");
+        document.getElementById("toplevelTextCommentContent").value = title.substring(0,300);
+        return;
+    }*/
+    //title=escape(encodeURI(title));
+    document.getElementById("toplevelTextCommentTitle").value = "";
+    
+    //content=escape(encodeURI(content));
+    document.getElementById("toplevelTextCommentContent").value = "";
+    
+    var ask = 0;
+    if(document.getElementById("askteacher") != null){
+        if(document.getElementById("askteacher").checked == true){
+            ask=1;
+        }
+    }
+    var chapterId = document.getElementById("chapterIdid").value;   
+    jQuery.post("/bbsapi/addCDiscuss",
+        {
+           moocId:'201248513',
+           clazzid:'3586246',
+           userId:'61076792',
+           title: title,
+           content:content,
+           chapterIds:chapterId,
+           schoolId:'25614',
+           replaytype:'1',
+           ask : ask,
+           role:'1'
+           ,type: 'student'
+           ,ut:'s'
+        },
+        function(data){
+           data = data.replace(/(^\s*)|(\s*$)/g,"");
+           var doc = document.getElementById("content2");
+           doc.innerHTML = data;
+            //alert("操作成功！");
+        }
+    );
+ };
+ function getcookie(objname){
+    var arrstr = document.cookie.split("; ");
+    for(var i = 0;i < arrstr.length;i ++){
+        var temp = arrstr[i].split("=");
+        if(temp[0] == objname){ 
+            return unescape(temp[1]);
+        }
+    }
+}
+function getChapterRightDiscuss(){
+    var chapterId=document.getElementById("chapterIdid").value; 
+    //jQuery.post("/schoolCourseInfo/getChapterRightDiscuss",
+    jQuery.post("/schoolCourseInfo/getgrouptopic",
+        {
+            courseId:'201248513'
+            ,clazzid:'3586246'
+            ,type: 2
+            ,ut:'s'
+            ,chapterId:chapterId
+        },
+        function(data){
+           data = data.replace(/(^\s*)|(\s*$)/g,"");
+           var doc = document.getElementById("content2");
+           doc.innerHTML = data;
+            $(function(){
+                swfu2 = new SWFUpload({
+                    flash_url : "/js/swfupload/swfupload.swf",
+                    upload_url:"/edit/swfUploadImage?uid="+getcookie("_uid"),
+                    file_types : "*.jpg;*.jpeg;*.gif;*.png",
+                    file_types_description : "All Images",
+                    file_size_limit : "20000000B",
+                    file_queue_limit : 0,
+                    custom_settings : {
+                        progressTarget : "imgUploadProgress2",
+                        cancelButtonId : "imgbtnCancel2",
+                        //currentUrl: $("fileUploader_group").attr("data")
+                    },
+                    debug: false,
+            
+                    // Button settings
+                    button_image_url: "/images/group/addPic.png",
+                    button_placeholder_id: "fileUploader_group",
+                    button_width: "30",
+                    button_height: "27",
+                    button_action : SWFUpload.BUTTON_ACTION.SELECT_FILES,
+                    button_cursor: SWFUpload.CURSOR.HAND,
+                    button_window_mode: SWFUpload.WINDOW_MODE.OPAQUE,
+                    
+                    // The event handler functions are defined in handlers.js
+                    upload_start_handler : uploadCover_upload_start_handler,
+                    file_queued_handler : uploadCover_file_queued_handler,
+                    file_queue_error_handler : SWFUpload.fileQueueError,
+                    file_dialog_complete_handler : uploadCover_file_dialog_complete_handler,
+                    upload_progress_handler : uploadCover_upload_progress_handler,
+                    upload_error_handler : SWFUpload.uploadError,
+                    upload_success_handler : uploadLandCover_upload_success_handler,
+                    upload_complete_handler : SWFUpload.uploadComplete,
+                    queue_complete_handler : uploadCover_queue_complete_handler
+                });
+                baguetteBox.run('.smallImg', {
+                    animation: 'fadeIn',
+                    });
+            });
+            
+            $(function(){
+                    $(".newTopic0").click(function(){
+                    down();
+                })
+            })
+        }
+    );
+}
+
+function getGroupChapterRightDiscuss(){
+
+    //jQuery.post("/schoolCourseInfo/getChapterRightDiscuss",
+    jQuery.post("/schoolCourseInfo/getgrouptopic",
+        {
+            courseId:'201248513'
+            ,clazzid:'3586246'
+            ,type: 2
+            ,ut:'s'
+        },
+        function(data){
+        data = data.replace(/(^\s*)|(\s*$)/g,"");
+           var doc = document.getElementById("content2");
+           doc.innerHTML = data;
+        }
+    );
+}
+
+var changePan = function(num){
+    num = parseInt(num);
+    for(var i=1;i<=3;i++){
+        var titledoc = document.getElementById("tit"+i);
+        var contentdoc = document.getElementById("content"+i);
+        if(1!=0||(1==0&&i!=2)){
+            if(i==num){
+                titledoc.className="current01";
+                titledoc.style.display="block";
+                contentdoc.style.display="block";
+            }else{
+                titledoc.className="";
+                contentdoc.style.display="none";
+            }
+        }
+    }
+}
+                
+var changeDisplayContent = function(num,totalnum,chapterId,courseId,clazzid,knowledgestr){
+        num = parseInt(num);
+        totalnum = parseInt(totalnum);
+        for(var i=1;i<=totalnum;i++){
+            var titledoc = document.getElementById("dct"+i);
+            var leftdoc = document.getElementById("left"+i);
+            var rightdoc = document.getElementById("right"+i);
+            if(i==num){
+                titledoc.className="c"+i+" currents";
+                //leftdoc.style.display="block";
+                //rightdoc.style.display="block";
+                num = num-1;
+                document.getElementById("iframe").src="/knowledge/cards?clazzid="+clazzid+"&courseid="+courseId+"&knowledgeid="+chapterId+"&num="+num+"&v=20160407-1";
+                var el = $('#iframe');
+                window.ed_reinitIframe = function ed_reinitIframe(){
+                    var iframe = el[0];
+                    
+                    try{
+                        var bHeight = iframe.contentWindow.document.body.scrollHeight;          
+                        var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;           
+                        var height = Math.max(bHeight, dHeight);
+                        el.attr('height',height);
+                    }catch (ex){}
+                }
+                //var openlockdiv=document.getElementById("openlock");
+                if($("#openlock").length>0){
+                    if(num+1==totalnum){
+                        setTimeout('openlockshow();',2000);
+                    }else{
+                        document.getElementById("openlock").style.display="none";
+                    }    
+                }
+                window.setInterval("ed_reinitIframe()", 200);
+                
+                jobflagOperation();
+                
+            }else{
+                titledoc.className="c"+i;
+                leftdoc.style.display="none";
+                rightdoc.style.display="none";
+            }
+        }
+        if(typeof(MoocPlayers)!='undefined'){
+            
+             MoocPlayers.clearMids();
+        }
+        
+}
+
+var PCount = (function(){
+        var cur =1,
+        inner = changeDisplayContent;
+        
+    return {
+        
+        next : function(count,chapterId,courseId,clazzid,knowledgestr){
+            cur = parseInt(cur);
+            count = parseInt(count);
+            if(cur>=count){
+            document.getElementById("mainid").innerHTML = "<div style=\"width:32px;height:32px;margin:0 auto;padding:300px 0\"><img src=\"/images/courselist/loading.gif\" /></div>"
+                cur = 1; 
+                jQuery.post("/mycourse/changeCapter",
+                {
+                    courseId:courseId
+                    ,clazzid:clazzid
+                    ,chapterId: chapterId
+                    ,knowledgestr:knowledgestr
+                    ,type:1
+                    ,date:new Date()
+                },
+                function(data){
+                //alert(20160407);
+                   data = data.replace(/(^\s*)|(\s*$)/g,"");
+                   var doc = document.getElementById("mainid");
+                   doc.innerHTML = data;
+                   chapterId = document.getElementById("chapterIdid").value;
+                   jQuery(".ncells h4").removeClass();
+                   jQuery(".ncells h5").removeClass();
+                   jQuery("#cur"+chapterId).addClass("currents");
+                   jQuery(".ncells .flush").css('display','none');
+                   jQuery("#cur"+chapterId).parent().parent().find(".flush").css('display','block');
+                   document.getElementById("iframe").src="/knowledge/cards?clazzid="+clazzid+"&courseid="+courseId+"&knowledgeid="+chapterId+"&num=0&v=20160407-1";
+                   var el = $('#iframe');
+                   
+                    window.ed_reinitIframe = function ed_reinitIframe(){
+                        var iframe = el[0];
+                        
+                        try{
+                            var bHeight = iframe.contentWindow.document.body.scrollHeight;          
+                            var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;           
+                            var height = Math.max(bHeight, dHeight);
+                            el.attr('height',height);
+                        }catch (ex){}
+                    }
+                     // var openlockdiv=document.getElementById("openlock");
+                    if($("#openlock").length>0){
+                      var count=document.getElementById("cardcount").value;
+                        if(count==1){
+                            setTimeout('openlockshow();',2000);
+                       } 
+                    }
+                    
+                    if($("#cur"+chapterId+" .orange01").length>0){
+                    
+                        jQuery.ajax({
+                            type : "get",
+                            url : "/edit/validatejobcount",
+                            data : {
+                                courseId:courseId
+                                ,clazzid:clazzid
+                                ,nodeid: chapterId
+                            },
+                        });
+                    }
+                    
+                    window.setInterval("ed_reinitIframe()", 200);
+                    jobflagOperation();
+                    getClazzNote();
+                   }
+                );
+            }else{
+               cur++;
+               inner(cur,count,chapterId,courseId,clazzid,knowledgestr);
+               
+            }
+            scroll(0,0);
+        },
+        previous : function(count,chapterId,courseId,clazzid,knowledgestr){
+            cur = parseInt(cur);
+            count = parseInt(count);
+            if(cur<=1){
+                document.getElementById("mainid").innerHTML = "<div style=\"width:32px;height:32px;margin:0 auto;padding:300px 0\"><img src=\"/images/courselist/loading.gif\" /></div>"
+                cur = 1;
+                jQuery.post("/mycourse/changeCapter",
+                {
+                    courseId:courseId
+                    ,clazzid:clazzid
+                    ,chapterId: chapterId
+                    ,knowledgestr:knowledgestr
+                    ,type:0
+                    ,date:new Date()
+                },
+                function(data){
+                   data = data.replace(/(^\s*)|(\s*$)/g,"");
+                   var doc = document.getElementById("mainid");
+                   doc.innerHTML = data;
+                   chapterId = document.getElementById("chapterIdid").value;
+                   jQuery(".ncells h4").removeClass();
+                   jQuery(".ncells h5").removeClass();
+                   jQuery("#cur"+chapterId).addClass("currents");
+                   jQuery(".ncells .flush").css('display','none');
+                   jQuery("#cur"+chapterId).parent().parent().find(".flush").css('display','block')
+                   document.getElementById("iframe").src="/knowledge/cards?clazzid="+clazzid+"&courseid="+courseId+"&knowledgeid="+chapterId+"&num=0&v=20160407-1";
+                    var el = $('#iframe');
+                        
+                    window.ed_reinitIframe = function ed_reinitIframe(){
+                        var iframe = el[0];
+                        
+                        try{
+                            var bHeight = iframe.contentWindow.document.body.scrollHeight;          
+                            var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;           
+                            var height = Math.max(bHeight, dHeight);
+                            el.attr('height',height);
+                        }catch (ex){}
+                    }
+                        // var openlockdiv=document.getElementById("openlock");
+                    if($("#openlock").length>0){
+                     var count=document.getElementById("cardcount").value;
+                        if(count==1){
+                            setTimeout('openlockshow();',2000);
+                       } 
+                    }
+                    
+                    if($("#cur"+chapterId+" .orange01").length>0){
+                    
+                        jQuery.ajax({
+                            type : "get",
+                            url : "/edit/validatejobcount",
+                            data : {
+                                courseId:courseId
+                                ,clazzid:clazzid
+                                ,nodeid: chapterId
+                            },
+                        });
+            }
+                    
+                    window.setInterval("ed_reinitIframe()", 200);
+                    jobflagOperation();
+                    getClazzNote();
+                }
+                );
+            }else if(cur>0){
+              cur--;
+              inner(cur,count,chapterId,courseId,clazzid,knowledgestr);
+            }
+            scroll(0,0);
+        }
+    }
+})();
+
+function getTeacherAjax(courseId,clazzid,chapterId){
+    if(courseId==0||clazzid==0||chapterId==0){
+        alert("无效的参数！");
+        return ;
+    }
+    document.getElementById("mainid").innerHTML = "<div style=\"width:32px;height:32px;margin:0 auto;padding:300px 0\"><img src=\"/images/courselist/loading.gif\" /></div>"
+    jQuery.post("/mycourse/studentstudyAjax",
+        {
+            courseId:courseId
+            ,clazzid:clazzid
+            ,chapterId: chapterId
+        },
+        function(data){
+           data = data.replace(/(^\s*)|(\s*$)/g,"");
+           var doc = document.getElementById("mainid");
+           doc.innerHTML = data;
+            document.getElementById("iframe").src="/knowledge/cards?clazzid="+clazzid+"&courseid="+courseId+"&knowledgeid="+chapterId+"&num=0&v=20160407-1";
+            var el = $('#iframe');
+            //var openlockdiv=document.getElementById("openlock");
+            if($("#openlock").length>0){
+                var count=document.getElementById("cardcount").value;
+                if(count==1){
+                    setTimeout('openlockshow();',2000);
+                }   
+            }
+            if($("#cur"+chapterId+" .orange01").length>0){
+                    
+                jQuery.ajax({
+                    type : "get",
+                    url : "/edit/validatejobcount",
+                    data : {
+                        courseId:courseId
+                        ,clazzid:clazzid
+                        ,nodeid: chapterId
+                    },
+                });
+            }
+            window.ed_reinitIframe = function ed_reinitIframe(){
+                var iframe = el[0];
+                
+                try{
+                    var bHeight = iframe.contentWindow.document.body.scrollHeight;          
+                    var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;           
+                    var height = Math.max(bHeight, dHeight);
+                    el.attr('height',height);
+                }catch (ex){}
+            }
+            window.setInterval("ed_reinitIframe()", 200);
+            
+            var tab=0;
+            if(tab==3){
+                getClazzNote();changePan('3');
+            }else if(tab==2){
+                getChapterRightDiscuss();changePan('2');
+            }else{
+                changePan('1');
+            }
+        }
+        
+    );
+    window.setInterval("setposition()", 200);
+    
+    jobflagOperation();
+    
+    //window.setTimeout("setposition()", 200);
+    scroll(0,0);
+}
+
+var getMouseX = function(event) {
+    event = event || window.event;
+    return event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
+};
+
+$(function () {
+    var oMain = jQuery('.main').first();
+    var oSelector = jQuery('#selector');
+    var oWestSpliter = jQuery('#selector .spliter.west').first();
+    var oEastSpliter = jQuery('#selector .spliter.east').first();
+    var iMinWidth = 303;
+    var sMask = '<div class="mask"></div>';
+
+    oWestSpliter.on('mousedown', function(event) {
+        
+        event = event || window.event;
+        
+        var iX = getMouseX(event);
+        var iWidth = oSelector.innerWidth();
+        
+        oWestSpliter[0].setCapture && oWestSpliter[0].setCapture(); 
+        
+        oMain.append(sMask);
+        
+        jQuery(document).bind('mousemove', function(ev) {
+            ev = ev || window.event;
+            
+            var iDX = getMouseX(ev) - iX;
+            var iToWidth = iWidth - iDX;
+            
+            if (iToWidth < iMinWidth) {
+                return;
+            }
+            
+            setCookie('selectwidth', iToWidth, 24 * 7, '/mycourse/studentstudy');
+            oSelector.css('width', iToWidth + 'px');
+        });
+        
+        jQuery(document).bind('mouseup', function() {
+            oWestSpliter[0].releaseCapture && oWestSpliter[0].releaseCapture(); 
+            var oMask = jQuery('.mask').first();
+            oMask && oMask.remove();
+            jQuery(document).unbind('mousemove');
+            jQuery(document).unbind('mouseup');
+        });
+    });
+    
+    oEastSpliter.on('mousedown', function(event) {
+        event = event || window.event;
+        
+        var iX = getMouseX(event);
+        var iWidth = oSelector.innerWidth();
+        
+        oEastSpliter[0].setCapture && oEastSpliter[0].setCapture(); 
+        
+        oMain.append(sMask);
+        
+        jQuery(document).bind('mousemove', function(ev) {
+            ev = ev || window.event;
+            
+            var iDX = getMouseX(ev) - iX;
+            var iToWidth = iWidth + iDX;
+            
+            if (iToWidth < iMinWidth) {
+                return;
+            }
+            
+            setCookie('selectwidth', iToWidth, 24 * 7, '/mycourse/studentstudy');
+            oSelector.css('width', iToWidth + 'px');
+        });
+        
+        jQuery(document).bind('mouseup', function() {
+            oEastSpliter[0].releaseCapture && oEastSpliter[0].releaseCapture(); 
+            var oMask = jQuery('.mask').first();
+            oMask && oMask.remove();
+            jQuery(document).unbind('mousemove');
+            jQuery(document).unbind('mouseup');
+        });
+    });
+});
+
+</script>
+
+
+<script type="text/javascript">
+function jobflag(){
+    var ff = window.frames[0];
+    var jobNum = 0,finishedNum =0;
+    if(ff){
+        jobNum += jQuery(".ans-job-icon",ff.document).size();
+        finishedNum += jQuery(".ans-job-finished",ff.document).size();
+    }
+    if(jobNum > 2 && jobNum - finishedNum > 0){
+        jQuery("#jobhint").fadeIn();
+        jQuery("#jobhint span").html(jobNum - finishedNum);
+        
+        console.log("jobNum"+jobNum);
+        console.log("finishedNum"+finishedNum);
+        
+        var unfinished = jQuery(".ans-job-icon",ff.document).parent().not(".ans-job-finished");
+    
+        if(unfinished.size()>0){
+            jQuery("#jobhint").attr("href","javascript:;");
+            jQuery("#jobhint").click(function(){
+                //var tar = jQuery(unfinished[0]);
+                //console.log(tar);
+                //jQuery("html,body").animate({scrollTop:tar.offset().top},200);
+                jQuery("html,body").animate({scrollTop:jQuery(jQuery(".ans-job-icon",window.frames[0].document).parent().not(".ans-job-finished")[0]).offset().top},200);
+            });
+        }else{
+            jQuery("#jobhint").attr("href","javascript:;");
+            jQuery("#jobhint span").html(0);
+            $("#jobhint").unbind("click");
+        }
+        
+    }else{
+        jQuery("#jobhint").fadeOut();
+        jQuery("#jobhint").attr("href","javascript:;");
+        jQuery("#jobhint span").html(0);
+        $("#jobhint").unbind("click");
+    }
+}
+
+function jobflagOperation(){
+    try{
+        setTimeout(jobflag,6000);
+    }catch(e){console.log(e.message);}
+}
+
+jQuery(document).ready(function(){
+    setTimeout(jobflag,5000);
+});
+
+</script>
+
+</head>
+<body>
+<div class="bigImg"><img src=""></div>
+    <div class="imgBg"></div>
+<a name="gotop"></a>
+<div  class="left" >
+<div class="content">
+
+    
+    <div class="goback"><span></span> <a href='/mycourse/studentcourse?courseId=201248513&clazzid=3586246&enc=2fd2db74d2e5937f4334ed2e716fe860'>回到课程</a></div>
+    <div class="main" id="mainid">
+    </div>
+    
+    
+</div>  
+</div>
+
+
+<div  class="right ui-widget-content"  id="selector" >
+<div class="tabs">
+<div class="lists">
+    <ul>
+        <li id="tit1" onclick="changePan('1');" class="current01">目录</li>
+         <li id="tit2" class="" onclick="getChapterRightDiscuss();changePan('2');">讨论</li>    <li id="tit3" class="" onclick="getClazzNote();changePan('3');">笔记</li>
+    </ul>
+    <div class="clear"></div>
+    </div>
+
+ <div class="showcontent">
+ <div class="thiscontent chapter" style="display:block" id="content1">
+    <div class="onetoone" id="coursetree">
+    </div>
+ </div>
+    <div class="thiscontent discuss" id="content2" style="display : none"></div>
+    <div id="content3" class="thiscontent note" style="display:none">
+    </div>
+</div>
+</div>
+    <div style="" class="teacherTool">      
+        <div id="btnOpt">
+                        <a title="课程答疑" id="dy" href="/third/aq?courseid=201248513" target="_blank" ></a>                           <a title="在线客服" id="kf" href="/online-service" target="_blank" ></a>
+                                                                                                                <div class="toolCloseBtn"></div>
+        </div>
+    </div>
+    <a href="#" id="jobhint" class="jobhint" style="display:none;">
+        <span style="display:block;width:45px;height:45px;text-align:center;font-size:20px;line-height:45px;color:#fff;">0</span>
+    </a>
+    <div class="spliter west" style="z-index: 90;width:7px;height:29px;position:absolute;top:40%;left:-7px;"><img src="/images/Rtiao.png"></div>
+    <div class="spliter east" style="z-index: 90;"></div>
+    <div class="toolOpenBtn"></div>
+</div>
+<div  class="switchbtn" ></div>
+<div style="height: 100%;display:none;" id="messagedialogepar" class="bgmask">
+</div>
+<div style="margin-top: -255.5px;" class="mypop" id="messagedialoge"></div>
+<div class="AlertCon02" id="validate" style="width:368px;height:139px;display:none;" align="center" >
+    <table class="zc_table">
+        <tr>
+           <td colspan="3">
+            <span class="sp_h2">请输入验证码：</span>
+            </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <input class="zc_input32" name="code" id="code" type="text" 
+                    onkeydown="keydownSubmit(event)" 
+                    onfocus="hiddenError('mod_error')"/>
+        </td>
+        <td class="zc_vercode_ac">
+                <span class="zc_verify" onclick="getVarCode();">
+                <img src="/img/code" width="124" height="28" id="imgVerCode"/></span>
+                <a href="javascript:void(0);" onclick="getVarCode();" style="color:#02bffd">看不清</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: left;">
+            <span class="zc_btn">
+                <a href="javascript:void(0);" id="sub">确定</a>
+            </span>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+</div>
+<div class="bigImgDiv">
+    <div class="bigImgMask"></div>
+    <div class="bigImgClose"></div>
+</div>
+</body>
+<script type="text/javascript" src="/js/courselist/tabs.js?v=20160407"></script>
+<script type="text/javascript" src="/js/courselist/recognize.js?v=20160407"></script>
+<script type="text/javascript" src="/js/courselist/inputDefault.js?v=20160407"></script>
+<script type="text/javascript" src="/js/courselist/player.js?v=20160407"></script>
+<script type="text/javascript" src="/js/courselist/util.js?v=20160407"></script>
+<script src="/js/chapterDiscussUploadCourseImg.js?v=2018-0130-1400"></script>
+<script src="/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/js/swfupload/swfupload.queue.js"></script>
+<link href="/css/courselist/popwin.css?v=20160407" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+var pid = getCookie('pid');//得到联盟id即pid
+//如果是安徽联盟，则隐藏联系客服
+if(pid != undefined && pid == 348){
+    $("#isAhlm").hide();
+}
+//如果是无锡职业技术学院-控制技术学院，则隐藏联系客服
+var fid = getCookie('fid');
+if(fid != undefined && fid == 159){
+    $("#isAhlm").hide();
+}
+
+$(document).ready(function(){
+function setwidth(){
+    if(screen.width <= 1024){$('.switchbtn').click();}
+    
+    var selectwidth = getCookie('selectwidth');
+    
+    if (selectwidth) {
+        jQuery('#selector').css('width', selectwidth + 'px');
+    }
+}
+setwidth();
+});
+var onReadComplete =function(){
+   setTimeout('onReadComplete1();',2000);
+}
+
+var onReadComplete1 =function(){
+   var chapterId = document.getElementById("chapterIdid").value;
+    jQuery.ajax({ //一个Ajax过程 
+            type: "get", //以get方式与后台沟通 
+            url : "/mycourse/studentstudycourselist", 
+            dataType:'html',//返回的值
+            data: {courseId:'201248513',chapterId:chapterId,clazzid:'3586246'}, 
+            success: function(data){//如果调用成功 
+                document.getElementById("coursetree").innerHTML=data;
+                jQuery(".ncells h4").removeClass();
+                jQuery(".ncells h5").removeClass();
+                jQuery("#cur"+chapterId).addClass("currents");
+                jQuery(".ncells .flush").css('display','none');
+                jQuery("#cur"+chapterId).parent().parent().find(".flush").css('display','block');
+            } 
+        }); 
+        
+    setTimeout(jobflag,1000);
+}
+function addZero(num) {
+  if (num < 10) {
+    return '0' + num;
+  }
+
+  return num;
+}
+function dateFormate(second){
+    if(second<=0){
+        return "00:00:00";
+    }else{
+        var date = new Date(second * 1000);
+            var h = date.getHours() - 8;
+            var m = date.getMinutes() ;
+            var s = date.getSeconds();
+            var ts = addZero(h) + ':' + addZero(m) + ':' + addZero(s);
+        return ts;
+    }
+
+}
+ 
+function getClazzNote(){
+var chapterId = document.getElementById("chapterIdid").value;
+    jQuery.post("/schoolCourseInfo/getClazzNote",
+        {
+             userid : '61076792'
+            ,clazzid:'3586246'
+            ,courseId : '201248513'
+            ,node_id : chapterId
+        },
+        function(data){
+           data = data.replace(/(^\s*)|(\s*$)/g,"");
+           var doc = document.getElementById("content3");
+           doc.innerHTML = data;
+           getNotePidShow();
+           if ( $("#reminder").length > 0 ) {
+                    setTimeout(function(){
+                  $("#reminder").fadeOut(1000,function(){
+                        $("#reminder")[0].style.display="none"; 
+                  });     
+            
+                }
+                ,1000);
+                
+            }
+            /*根据视频观看点跳到播放位置*/
+            $("#writenotecontent").click(function(event) {
+                event = event || window.event;
+                var target = event.target || event.srcElement;
+                
+                try{
+                    target=target.parentNode;
+                }catch(e){return;}
+                
+                var tagName = target.tagName.toLocaleLowerCase();
+                if ('span' == tagName && MoocPlayers) {
+                    target=target.parentNode;
+                    var mid=target.getAttribute('mid');
+                    MoocPlayers.goPlay(mid, target.getAttribute('data'));
+                    MoocPlayers.playMovie(mid);
+                }
+                
+            });
+        }
+    );
+};
+
+var isblank=false;
+getTeacherAjax('201248513','3586246','102427150');
+var lsatNoteContent="";
+    
+    var addOrUpdateClazzNote = function(){
+       try{
+            $("#writenotecontent > p").each(function(){
+                var pvalude= $(this).text().replace(/(^\s*)|(\s*$)/g,'').replace(/<br[^>]*>/gi, '<br>');
+                if (pvalude.trim() == '<br>') {
+                    $(this).text("");
+                }
+                if(pvalude.trim().length==0){
+                    $(this).remove();
+                }
+            })
+            
+        }catch(e){
+        }
+        
+        //去除p跟从时间点p的样式
+        try{
+            $("#writenotecontent > p").each(function(){
+                if($(this).find('img').size()==0){
+                    $(this).css('color','#000000');
+                }
+            })
+            
+        }catch(e){
+        }    
+        
+        var content = $("#writenotecontent").html();
+        if(content=='null'||content==null||content=='undefined'){
+            return ;
+        }
+        
+        try{
+            var temp = content.replace(/(^\s*)|(\s*$)/g,'').replace(/<br[^>]*>/gi, '<br>');
+            if (temp.trim() == '<br>') {
+                content = '';
+                $("#writenotecontent").html(content);
+            }
+            content=content.replace(/(^\s*)|(\s*$)/g,'');
+            content=content.replace(/(&nbsp;)*$/g,'');
+            if(content.length==0&&isblank){
+                return;
+            }
+            isblank=false;
+            
+        }catch(e) {
+        }
+        if(lsatNoteContent == content){
+            return ; 
+        }
+        lsatNoteContent = content;
+        var chapterId = document.getElementById("chapterIdid").value;
+        jQuery.ajax({ 
+                type: "post", 
+                url : "/schoolCourseInfo/addOrUpdateClazzNote", 
+                dataType:'html',
+                data: {
+                        userid : '61076792'
+                        ,clazzid:'3586246'
+                        ,node_id : chapterId
+                        ,content : content
+                        ,courseid:'201248513'
+                    }, 
+                success: function(data){
+                   if(content.length==0){
+                        isblank=true;
+                   }
+                  $("#successTip").fadeIn().delay(1200).fadeOut(100);
+                   return data;
+                } 
+            }); 
+    }
+
+    window.onbeforeunload = addOrUpdateClazzNote;
+ //   var timeWhile = function(){
+ //     setTimeout(function(){addOrUpdateClazzNote();timeWhile();},6000);
+ //   }
+    
+    function getNotePidShow(){
+        $("#writenotecontent > p").each(function(){
+            try{
+                var oAtitle= $(this).children('span')[0];
+                oAtitle.setAttribute("class","title_block");
+                oAtitle.setAttribute("contenteditable","false");
+                
+                oAtitle.onmouseover = function(){
+                    $(this.getElementsByTagName('img')[0]).removeClass('class');
+                    this.getElementsByTagName('img')[0].setAttribute('class', 'iconon');
+                    this.getElementsByTagName('img')[0].setAttribute('src', '/images/note/note_on.png');
+                    $(this.getElementsByTagName('span')[0]).removeClass('class');
+                    this.getElementsByTagName('span')[0].setAttribute('class', 'contenton');
+                    $("#writenotecontent").attr('contenteditable',false);
+                }
+                oAtitle.onmouseout = function(){
+                    $(this.getElementsByTagName('img')[0]).removeClass('class');
+                    this.getElementsByTagName('img')[0].setAttribute('class', 'iconoff');
+                    this.getElementsByTagName('img')[0].setAttribute('src', '/images/note/note_off.png');
+                    $(this.getElementsByTagName('span')[0]).removeClass('class');
+                    this.getElementsByTagName('span')[0].setAttribute('class', 'contentoff');
+                    $("#writenotecontent").attr('contenteditable',true);
+                }
+            }catch(e){
+            }
+        })
+    }
+function down(){
+    var el = $('.newPic'),
+    curHeight = el.height(),
+    autoHeight = el.css('height', 'auto').height();
+    el.height(curHeight).animate({height: autoHeight}, 250);
+}
+
+function openlockshow(){
+    if($("#openlock").length>0){
+        document.getElementById("openlock").style.display="block";
+    }
+}
+
+function openLock(count,chapterId,courseId,clazzid,knowledgestr){
+    jQuery.get("/edit/openlock",
+        {
+            clazzid : clazzid,
+            nodeid : chapterId,
+            courseId:courseId
+        },
+        function(data){
+            if(data=="true"){
+                PCount.next(1,chapterId,courseId,clazzid,knowledgestr);
+                onReadComplete();
+            }
+        }
+    );
+}
+function clickImg(){
+    $("#iframe").contents().find("img").click(function(){
+        var imgSrc = $(this).attr("src");
+        var originImg = '<img src=' + imgSrc +'/>';
+        $(".bigImgDiv").css("display","block");
+        $(".bigImgDiv").append(originImg);      
+    })
+}
+setTimeout(clickImg,500);
+$(".bigImgClose").click(function(){
+    $(".bigImgDiv").css("display","none");
+    $(".bigImgDiv img").remove();
+})
+    $(".toolOpenBtn").click(function() {
+        $(".teacherTool").show();
+    })
+    $(".toolCloseBtn").click(function() {
+        $(".teacherTool").hide();
+    })
+</script>
+
+<script type="text/javascript">
+            (function() {
+                var backToTopTxt = "返回顶部", backToTopEle = $('<a title="返回顶部" id="top"  href="javascript:scroll(0,0)" target="_self"></a>').appendTo($("#btnOpt"))
+                    .attr("title", backToTopTxt).click(function() {
+                        $("html, body").animate({ scrollTop : 0 }, 520);
+                }), backToTopFun = function() {
+                    var st = $(document).scrollTop(), winh = $(window).height();
+                    (st > 0)? backToTopEle.show(): backToTopEle.hide();    
+                    //IE6下的定位
+                    if (!window.XMLHttpRequest) {
+                        backToTopEle.css("top", st + winh - 60);    
+                    }
+                };
+                $(window).bind("scroll", backToTopFun);
+                $(function() { backToTopFun(); });
+            })();
+        </script>
+
+<script> 
+(function(){
+var script = document.createElement("script"),
+    url = "http://passport2.chaoxing.com/api/passport2-onlineinfo.js?key=true&refer=http://i.mooc.chaoxing.com",
+    url = url.replace("http://", window.location.protocol+"//");
+script.setAttribute("type", "text/javascript");
+script.setAttribute("src", url);
+document.documentElement.appendChild(script);
+})()
+</script> 
+  <script>
+
+_=~[];_={___:++_,$$$$:(![]+"")[_],__$:++_,$_$_:(![]+"")[_],_$_:++_,$_$$:({}+"")[_],$$_$:(_[_]+"")[_],_$$:++_,$$$_:(!""+"")[_],$__:++_,$_$:++_,$$__:({}+"")[_],$$_:++_,$$$:++_,$___:++_,$__$:++_};_.$_=(_.$_=_+"")[_.$_$]+(_._$=_.$_[_.__$])+(_.$$=(_.$+"")[_.__$])+((!_)+"")[_._$$]+(_.__=_.$_[_.$$_])+(_.$=(!""+"")[_.__$])+(_._=(!""+"")[_._$_])+_.$_[_.$_$]+_.__+_._$+_.$;_.$$=_.$+(!""+"")[_._$$]+_.__+_._+_.$+_.$$;_.$=(_.___)[_.$_][_.$_];_.$(_.$(_.$$+"\""+"("+_.$$$$+_._+"\\"+_.__$+_.$_$+_.$$_+_.$$__+_.__+"\\"+_.__$+_.$_$+_.__$+_._$+"\\"+_.__$+_.$_$+_.$$_+"(){\\"+_.__$+_._$_+"\\"+_.__$+_.$$_+_.$$_+_.$_$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.$__+_.___+_.$$$$+"\\"+_.__$+_.$_$+_.$$_+_._$_+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+_.$$$$+_._+"\\"+_.__$+_.$_$+_.$$_+_.$$__+_.__+"\\"+_.__$+_.$_$+_.__$+_._$+"\\"+_.__$+_.$_$+_.$$_+"(){\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.$$_+_.$$_+_.$_$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.$__+_.___+_.__+_.$_$_+"\\"+_.__$+_.$__+_.$$$+"\\"+_.__$+_.$$_+_._$$+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+_.$$_$+_._$+_.$$__+_._+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+".\\"+_.__$+_.$__+_.$$$+_.$$$_+_.__+"\\"+_.__$+_.___+_.$_$+(![]+"")[_._$_]+_.$$$_+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+"\\"+_.__$+_.$$_+_._$$+"\\"+_.__$+_.___+_._$_+"\\"+_.__$+_.$$$+_.__$+"\\"+_.__$+_._$_+_.$__+_.$_$_+"\\"+_.__$+_.$__+_.$$$+"\\"+_.__$+_.__$+_.$$_+_.$_$_+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"('\\"+_.__$+_.$$_+_._$$+_.$$__+"\\"+_.__$+_.$$_+_._$_+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$$_+_.___+_.__+"'),\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+(![]+"")[_._$_]+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+"[],\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_._$+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+"{},\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.$$_+_.$$$+(![]+"")[_._$_]+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+_.$$$$+_._+"\\"+_.__$+_.$_$+_.$$_+_.$$__+_.__+"\\"+_.__$+_.$_$+_.__$+_._$+"\\"+_.__$+_.$_$+_.$$_+"(\\"+_.__$+_.$$_+_._$$+"){\\"+_.__$+_._$_+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"},\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_.$$$$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+"\\"+_.__$+_.$$_+_.$$$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_._$+"\\"+_.__$+_.$$_+_.$$$+"."+_.$_$_+_._+_.__+"\\"+_.__$+_.$_$+_.___+_._$+"\\"+_.__$+_.$$_+_._$_+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$$$+_._$_+_.$$$_+"\\"+_.__$+_.___+_._$$+"\\"+_.__$+_.$_$+_.___+_.$$$_+_.$$__+"\\"+_.__$+_.$_$+_._$$+"\\"+_.__$+_.$$_+_._$$+"||\\"+_.__$+_.$$_+_.$$$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_._$+"\\"+_.__$+_.$$_+_.$$$+"."+_.$_$_+_._+_.__+"\\"+_.__$+_.$_$+_.___+_._$+"\\"+_.__$+_.$$_+_._$_+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$$$+_._$_+_.$$$_+"\\"+_.__$+_.___+_._$$+"\\"+_.__$+_.$_$+_.___+_.$$$_+_.$$__+"\\"+_.__$+_.$_$+_._$$+"||(\\"+_.__$+_.$$_+_.$$$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_._$+"\\"+_.__$+_.$$_+_.$$$+"."+_.$$__+"\\"+_.__$+_.$_$+_.___+"\\"+_.__$+_.$$_+_._$_+_._$+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"&&\\"+_.__$+_.$$_+_.$$$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_._$+"\\"+_.__$+_.$$_+_.$$$+"."+_.$$__+"\\"+_.__$+_.$_$+_.___+"\\"+_.__$+_.$$_+_._$_+_._$+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"."+_.$_$_+"\\"+_.__$+_.$$_+_.___+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$$_+_._$$+"&&\\"+_.__$+_.$$_+_.$$$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_._$+"\\"+_.__$+_.$$_+_.$$$+"."+_.$$__+"\\"+_.__$+_.$_$+_.___+"\\"+_.__$+_.$$_+_._$_+_._$+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"."+_.$_$_+"\\"+_.__$+_.$$_+_.___+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$$_+_._$$+".\\"+_.__$+_.$$_+_._$_+_.$$$_+"\\"+_.__$+_.$_$+_.$_$+_._$+"\\"+_.__$+_.$$_+_.$$_+_.$$$_+"\\"+_.__$+_.___+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$$$+_.__$+_._$+"\\"+_.__$+_.$_$+_.$$_+_.$$$_+")\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_.$$_$+"\\"+_.__$+_.$_$+_.$_$+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+"\\"+_.__$+_.$$_+_.$$$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_._$+"\\"+_.__$+_.$$_+_.$$$+"."+(![]+"")[_._$_]+_._$+_.$$__+_.$_$_+_.__+"\\"+_.__$+_.$_$+_.__$+_._$+"\\"+_.__$+_.$_$+_.$$_+".\\"+_.__$+_.$_$+_.___+_._$+"\\"+_.__$+_.$$_+_._$$+_.__+".\\"+_.__$+_.$$_+_._$_+_.$$$_+"\\"+_.__$+_.$$_+_.___+(![]+"")[_._$_]+_.$_$_+_.$$__+_.$$$_+"(/^.+?\\\\./,\\\"\\\");\\"+_.__$+_._$_+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+_.$$$$+_._$+"\\"+_.__$+_.$$_+_._$_+"(\\"+_.__$+_.$$_+_.$$_+_.$_$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.$__+_.___+"\\"+_.__$+_.$_$+_.__$+"="+_.___+";\\"+_.__$+_.$_$+_.__$+"<"+_.__+_.$_$_+"\\"+_.__$+_.$__+_.$$$+"\\"+_.__$+_.$$_+_._$$+"."+(![]+"")[_._$_]+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$__+_.$$$+_.__+"\\"+_.__$+_.$_$+_.___+";\\"+_.__$+_.$_$+_.__$+"++){\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.$$_+_.$$_+_.$_$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.$__+_.___+_.__+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+_.__+_.$_$_+"\\"+_.__$+_.$__+_.$$$+"\\"+_.__$+_.$$_+_._$$+"[\\"+_.__$+_.$_$+_.__$+"].\\"+_.__$+_.$$_+_._$$+"\\"+_.__$+_.$$_+_._$_+_.$$__+";\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.$_$+_.__$+_.$$$$+"("+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"('\\"+_.__$+_.$_$+_.___+_.__+_.__+"\\"+_.__$+_.$$_+_.___+"://')>="+_.___+"\\"+_.$__+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"&&\\"+_.$__+_.___+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"("+_.$$_$+"\\"+_.__$+_.$_$+_.$_$+")<"+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"&&\\"+_.$__+_.___+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"(\\\"\\"+_.__$+_.$_$+_.___+"\\"+_.__$+_.$_$+_.$_$+"."+_.$_$$+_.$_$_+"\\"+_.__$+_.$_$+_.__$+_.$$_$+_._+"."+_.$$__+_._$+"\\"+_.__$+_.$_$+_.$_$+"/\\\")<"+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"&&\\"+_.$__+_.___+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"(\\\"\\"+_.__$+_.$$_+_.__$+"\\"+_.__$+_.$$_+_.__$+"."+_.$$__+_._$+"\\"+_.__$+_.$_$+_.$_$+"/\\\")<"+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"&&\\"+_.$__+_.___+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"(\\\"\\"+_.__$+_.$$_+_._$$+_._$+"\\"+_.__$+_.$__+_.$$$+_._$+_._+"."+_.$$__+_._$+"\\"+_.__$+_.$_$+_.$_$+"/\\\")<"+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"&&\\"+_.$__+_.___+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"(\\\"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$_$+_._$+_.__+_._+_.$_$_+"\\"+_.__$+_.$_$+_.$$_+"."+_.$$__+_._$+"\\"+_.__$+_.$_$+_.$_$+"/\\\")<"+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"&&\\"+_.$__+_.___+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"(\\\"\\"+_.__$+_.$$_+_._$$+_._$+"\\"+_.__$+_.$__+_.$$$+_._$+_._+"."+_.$$__+_._$+"\\"+_.__$+_.$_$+_.$_$+"/\\\")<"+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"&&\\"+_.$__+_.___+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+_.$$$_+"\\"+_.__$+_.$$$+_.___+"\\"+_.__$+_.__$+_.$$$+_.$$$$+"(\\\"\\"+_.__$+_.$$_+_.$$$+"\\"+_.__$+_.$$$+_.___+"-\\"+_.__$+_.$_$+_.$_$+_.$$$_+_.$$_$+"\\"+_.__$+_.$_$+_.__$+_.$_$_+"."+_.$$__+_._$+"\\"+_.__$+_.$_$+_.$_$+"/\\\")<"+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"){\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_._$+"["+_.__+"]="+_.__$+";\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"}\\"+_.$__+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"}\\"+_.__$+_._$_+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+_.$$$$+_._$+"\\"+_.__$+_.$$_+_._$_+"(\\"+_.__$+_.$$_+_.$$_+_.$_$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.$__+_.___+_.__+"\\"+_.$__+_.___+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.$__+_.___+_._$+"){\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+(![]+"")[_._$_]+".\\"+_.__$+_.$$_+_.___+_._+"\\"+_.__$+_.$$_+_._$$+"\\"+_.__$+_.$_$+_.___+"("+_.__+");\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"}\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.$_$+_.__$+_.$$$$+"("+(![]+"")[_._$_]+"."+(![]+"")[_._$_]+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$__+_.$$$+_.__+"\\"+_.__$+_.$_$+_.___+">"+_.___+"||"+_.$$$$+"\\"+_.__$+_.$_$+_.$$_+"){\\"+_.__$+_._$_+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.$_$+_.__$+_.$$$$+"\\"+_.$__+_.___+"("+_.$$$$+"\\"+_.__$+_.$_$+_.$$_+")\\"+_.$__+_.___+"{\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.$$_+_.$$_+_.$_$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.$__+_.___+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$$_+_.___+_._+_.__+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+_.$$_$+_._$+_.$$__+_._+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+"."+_.$$__+"\\"+_.__$+_.$$_+_._$_+_.$$$_+_.$_$_+_.__+_.$$$_+"\\"+_.__$+_.___+_.$_$+(![]+"")[_._$_]+_.$$$_+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+"(\\\"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$$_+_.___+_._+_.__+"\\\");\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$$_+_.___+_._+_.__+"."+_.__+"\\"+_.__$+_.$$$+_.__$+"\\"+_.__$+_.$$_+_.___+_.$$$_+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+"'\\"+_.__$+_.$_$+_.___+"\\"+_.__$+_.$_$+_.__$+_.$$_$+_.$$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+"';\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$$_+_.___+_._+_.__+".\\"+_.__$+_.$$_+_.$$_+_.$_$_+(![]+"")[_._$_]+_._+_.$$$_+"\\"+_.$__+_.___+"=\\"+_.$__+_.___+"'"+_.$__$+_.$_$+_._$_+_.$$$+"';\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_.$$_$+_._$+_.$$__+_._+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+"."+_.$_$$+_._$+_.$$_$+"\\"+_.__$+_.$$$+_.__$+"."+_.$_$_+"\\"+_.__$+_.$$_+_.___+"\\"+_.__$+_.$$_+_.___+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.$$_$+"\\"+_.__$+_.___+_._$$+"\\"+_.__$+_.$_$+_.___+"\\"+_.__$+_.$_$+_.__$+(![]+"")[_._$_]+_.$$_$+"(\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$$_+_.___+_._+_.__+");\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"}\\"+_.__$+_._$_+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"$."+_.$_$_+"\\"+_.__$+_.$_$+_._$_+_.$_$_+"\\"+_.__$+_.$$$+_.___+"({\\"+_.$__+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_._+"\\"+_.__$+_.$$_+_._$_+(![]+"")[_._$_]+":\\\"/\\"+_.__$+_.$_$+_.$_$+_.$_$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.__$+_.$_$+_._$$+_.$$$_+_.$$_$+"/\\"+_.__$+_.$_$+_.$$_+_.$_$_+"\\"+_.__$+_.$_$+_.$$_+_.$_$_+"\\\",\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_.$$_$+_.$_$_+_.__+_.$_$_+":{\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_.__+_.$$$_+"\\"+_.__$+_.$$$+_.___+_.__+"\\"+_.$__+_.___+":\\"+_.$__+_.___+_.$$_$+_._$+_.$$__+_._+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+"."+_.$$_$+_._$+_.$$__+_._+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+"\\"+_.__$+_.___+_.$_$+(![]+"")[_._$_]+_.$$$_+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+"\\"+_.__$+_.$_$+_.$$_+_.__+".\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$$_+"\\"+_.__$+_.$_$+_.$$_+_.$$$_+"\\"+_.__$+_.$$_+_._$_+"\\"+_.__$+_.__$+_.___+"\\"+_.__$+_._$_+_.$__+"\\"+_.__$+_.__$+_.$_$+"\\"+_.__$+_.__$+_.$__+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"},\\"+_.$__+_.___+"\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+_.__+"\\"+_.__$+_.$$$+_.__$+"\\"+_.__$+_.$$_+_.___+_.$$$_+":'\\"+_.__$+_.$$_+_.___+_._$+"\\"+_.__$+_.$$_+_._$$+_.__+"'\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"\\"+_.__$+_.__$+"});\\"+_.__$+_._$_+"\\"+_.__$+_.__$+"}\\"+_.__$+_._$_+"};\\"+_.__$+_._$_+"\\"+_.__$+_._$_+"\\"+_.__$+_.$$_+_._$$+_.$$$_+_.__+"\\"+_.__$+_._$_+_.$__+"\\"+_.__$+_.$_$+_.__$+"\\"+_.__$+_.$_$+_.$_$+_.$$$_+_._$+_._+_.__+"("+_.$$$$+"\\"+_.__$+_.$_$+_.$$_+_._$_+","+_.__$+_.___+_.___+_.___+_.___+");\\"+_.__$+_._$_+"})();\\"+_.__$+_._$_+"\"")())();
+
+</script>
+</html>
